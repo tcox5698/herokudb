@@ -14,5 +14,12 @@ if [ "$1" == "" -o   "$1" == "-h" -o "$2" == "" ]; then
     exit 0
 fi
 
+heroku maintenance:on --app $TARGET_ENV
+
+heroku addons:remove shared-database --app $TARGET_ENV --confirm $TARGET_ENV
+heroku addons:add shared-database:5mb --app $TARGET_ENV
+
 heroku pgbackups:capture --app $SRC_ENV
-heroku pgbackups:restore DATABASE `heroku pgbackups:url --app $SRC_ENV` --app $TARGET_ENV
+heroku pgbackups:restore DATABASE `heroku pgbackups:url --app $SRC_ENV` --app $TARGET_ENV --confirm $TARGET_ENV
+
+heroku maintenance:off --app $TARGET_ENV
