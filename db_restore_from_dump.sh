@@ -32,6 +32,6 @@ echo "$TARGET_DB has been backed up"
 
 ./db_drop_create.sh $TARGET_DB
 
-pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d mbgrails_stage dbwork/$DUMP_FILE
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d $TARGET_DB dbwork/$DUMP_FILE
 
 echo "$TARGET_DB has been restored from dump $DUMP_FILE"
