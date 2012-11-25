@@ -18,10 +18,12 @@ if [ -f $DBWORK_DIR/$TARGET_DB.bak ] ; then
   mv $DBWORK_DIR/$TARGET_DB.bak $DBWORK_DIR/x$TARGET_DB.bak.$CUR_DATE
 fi
 
-pg_dump -U postgres -f $DBWORK_DIR/$TARGET_DB.bak $TARGET_DB
+psql -U postgres -h localhost $TARGET_DB < db_disconnect_users.sql
 
-psql -U postgres $TARGET_DB < db_disconnect_users.sql
-dropdb -U postgres $TARGET_DB
-createdb -U postgres $TARGET_DB
+pg_dump -U postgres -h localhost -f $DBWORK_DIR/$TARGET_DB.bak $TARGET_DB
+
+psql -U postgres -h localhost $TARGET_DB < db_disconnect_users.sql
+dropdb -U postgres -h localhost  $TARGET_DB
+createdb -U postgres -h localhost  $TARGET_DB
 
 echo "$TARGET_DB has been backed up, dropped, and re-created empty."
