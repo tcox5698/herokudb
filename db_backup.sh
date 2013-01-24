@@ -1,5 +1,5 @@
 #!/bin/bash
-export PGPASSWORD="password"
+#export PGPASSWORD="password"
 export DBWORK_DIR="./dbwork"
 export CUR_DATE=`date "+%Y%m%d-%H:%M:%S"`
 export TARGET_DB="$1"
