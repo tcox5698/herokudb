@@ -1,5 +1,5 @@
 #!/bin/bash
-export PGPASSWORD="password"
+#export PGPASSWORD="password"
 export DBWORK_DIR="./dbwork"
 export CUR_DATE=`date "+%Y%m%d-%H:%M:%S"`
 export SRC_DB="$1"
@@ -22,9 +22,9 @@ fi
 
 echo "resetting $TARGET_DB with the snapshot $DBWORK_DIR/$SRC_DB.bak"
 
-psql -U postgres $TARGET_DB < db_disconnect_users.sql
-dropdb -U postgres $TARGET_DB
-createdb -U postgres $TARGET_DB
-psql -U postgres $TARGET_DB < $DBWORK_DIR/$SRC_DB.bak
+psql $TARGET_DB < db_disconnect_users.sql
+dropdb $TARGET_DB
+createdb $TARGET_DB
+psql $TARGET_DB < $DBWORK_DIR/$SRC_DB.bak
 
 echo "$TARGET_DB has been restored from $DBWORK_DIR/$SRC_DB.bak"
