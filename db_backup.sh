@@ -17,6 +17,7 @@ if [ -f $DBWORK_DIR/$TARGET_DB.bak ] ; then
   mv $DBWORK_DIR/$TARGET_DB.bak $DBWORK_DIR/x$TARGET_DB.bak.$CUR_DATE
 fi
 
-pg_dump -f $DBWORK_DIR/$TARGET_DB.bak $TARGET_DB
+[ $? -eq 0 ] && pg_dump -f $DBWORK_DIR/$TARGET_DB.bak $TARGET_DB
 
-echo "$TARGET_DB has been backed up - BUT YOU BETTER VERIFY CAUSE NON-EXISTENT DBs BACKUP SUCCESSFULLY"
+[ $? -eq 0 ] && echo "$TARGET_DB has been backed up - BUT YOU BETTER VERIFY CAUSE NON-EXISTENT DBs BACKUP SUCCESSFULLY"
+[ $? -eq 1 ] && echo "$TARGET_DB failed to backup - CHECK FOR ERRORS"
